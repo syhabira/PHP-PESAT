@@ -121,14 +121,14 @@ include "header.php";
     </nav>
     <!-- End Navbar -->
 <div class="container-fluid py-4">
-  <div class="card p-5 w-auto d-inline-block"
+  <div class="card p-5 w-100 d-inline-block"
     style="background-color: #fc8c03; border-radius: 1rem; transition: all 0.3s ease-in-out;"
     onmouseover="this.style.transform='scale(1.03)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.2)'"
     onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
     
     <div class="button">
-      <a href="../pages/name.php
-          " style="color: white; text-decoration: none;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+      <a href="../pages/name.php"
+         style="color: white; text-decoration: none;">
         <h5 style="color: white; margin: 0;">Add Name</h5>
       </a>
     </div>
@@ -153,6 +153,7 @@ include "header.php";
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">NIS</th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                   <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Class</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ACTION</th>
                 </tr>
               </thead>
               <tbody>
@@ -168,6 +169,8 @@ include "header.php";
                         <td class='align-middle'>{$data['nis']}</td>
                         <td class='align-middle'>{$data['nama']}</td>
                         <td class='align-middle'>{$data['kelas']}</td>
+                        <td><button class=''>edit</button>
+                        <button class=''>hapus</button></td>
                     </tr>";
                     $no++;
                 }

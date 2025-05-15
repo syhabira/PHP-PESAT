@@ -1,5 +1,40 @@
 <?php
 include "header.php";
+include "koneksi.php";
+
+$berhasil = false;
+
+// Ambil ID dari URL
+$id_siswa = $_GET['id_siswa'];
+
+// sql untuk menampilkan data di value form
+$sql = "SELECT * FROM siswa WHERE id_siswa = $id_siswa";
+
+//eksekusi
+$result = mysqli_query(mysql: $koneksi, query: $sql);
+
+//mengambil satu baris data dari hasil query ($result) dalam bentuk array asosiatif.
+// data ini akan ditampilkan di form input
+$data = mysqli_fetch_assoc($result);
+
+// Update data jika form disubmit
+if (isset($_POST['simpan' ])) {
+$nama = $_POST['nama' ];
+$kelas = $_POST['kelas'];
+
+//query
+$update = "UPDATE siswa SET nama='$nama', kelas='$kelas' WHERE id_siswa=$id_siswa";
+
+//eksekusi
+$simpan = mysqli_query(mysql: $koneksi, query: $update);
+
+if ($simpan) {
+$berhasil = true;
+} else {
+    echo "failed";
+}
+}
+
 ?>
 
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
@@ -7,9 +42,9 @@ include "header.php";
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tables</li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Add Student</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Tables</h6>
+          <h6 class="font-weight-bolder mb-0">Add</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -120,71 +155,23 @@ include "header.php";
       </div>
     </nav>
     <!-- End Navbar -->
-<div class="container-fluid py-4">
-  <div class="card p-5 w-100 d-inline-block"
-    style="background-color: #fc8c03; border-radius: 1rem; transition: all 0.3s ease-in-out;"
-    onmouseover="this.style.transform='scale(1.03)'; this.style.boxShadow='0 10px 20px rgba(0,0,0,0.2)'"
-    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
-    
-    <div class="button">
-      <a href="../pages/name.php"
-         style="color: white; text-decoration: none;">
-        <h5 style="color: white; margin: 0;">Add Name</h5>
-      </a>
-    </div>
 
-  </div>
+
+    <div class="container mt-5">
+<h3>Edit Data Siswa</h3>
+<form method="POST">
+<div class="mb-3">
+<label for="nama" class="form-label">Nama</label>
+<input type="text" class="form-control" name="nama" value="<?=$data['nama']?>" required>
 </div>
-
-
-   <div class="container-fluid py-4">
-  <div class="row">
-    <div class="col-12">
-      <div class="card mb-4">
-        <div class="card-header pb-0 text-center">
-          <h5>Students Table</h5>
-        </div>
-        <div class="card-body px-4 pt-0 pb-2">
-          <div class="table-responsive p-0">
-            <table class="table align-items-center text-center mb-0">
-              <thead>
-                <tr>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">NIS</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Class</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">ACTION</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
-                include "koneksi.php";
-                $query = "SELECT * FROM `siswa`";
-                $exec = mysqli_query($koneksi, $query);
-                $no = 1;
-                foreach ($exec as $data) {
-                    echo "
-                    <tr>
-                        <td class='align-middle'>{$no}</td>
-                        <td class='align-middle'>{$data['nis']}</td>
-                        <td class='align-middle'>{$data['nama']}</td>
-                        <td class='align-middle'>{$data['kelas']}</td>
-                        <td> <a href='../pages/edit.php?id_siswa={$data['id_siswa']}' class='btn btn-success'>Edit</a>
-                        <button class='btn btn-danger' >hapus</button></td>
-                    </tr>";
-                    $no++;
-                }
-                ?>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="mb-3">
+<label for="kelas" class="form-label">Kelas</label>
+<input type="text" class="form-control" name="kelas" value="<?=$data['kelas']?> " required>
 </div>
-
-  </main>
+<button type="submit" name="simpan" class="btn btn-primary">Simpan</button>
+<a href="data_siswa.php" class="btn btn-secondary">Batal</a>
+</form>
+</div> 
   <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
       <i class="fa fa-cog py-2"> </i>
